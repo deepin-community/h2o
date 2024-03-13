@@ -1,0 +1,19 @@
+Author: Apollon Oikonomopoulos <apoikos@debian.org>
+Description: Link libh2o and libh2o-evloop against wslay
+Bug-Debian: https://bugs.debian.org/908124
+Last-Update: 2018-09-22
+Forwarded: no
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -396,6 +396,11 @@
+     SOVERSION ${LIBRARY_SOVERSION})
+ TARGET_LINK_LIBRARIES(libh2o-evloop ${EXTRA_LIBS})
+ 
++IF (WSLAY_FOUND)
++    TARGET_LINK_LIBRARIES(libh2o ${WSLAY_LIBRARIES})
++    TARGET_LINK_LIBRARIES(libh2o-evloop ${WSLAY_LIBRARIES})
++ENDIF (WSLAY_FOUND)
++
+ IF (OPENSSL_FOUND)
+     TARGET_INCLUDE_DIRECTORIES(libh2o PUBLIC ${OPENSSL_INCLUDE_DIR})
+     TARGET_INCLUDE_DIRECTORIES(libh2o-evloop PUBLIC ${OPENSSL_INCLUDE_DIR})

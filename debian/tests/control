@@ -1,0 +1,3 @@
+Tests: status libh2o-server libh2o-client
+Depends: h2o, curl, jq, libh2o-dev, build-essential, libwslay-dev, libuv1-dev, libssl-dev
+Restrictions: allow-stderr

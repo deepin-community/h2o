@@ -1,0 +1,9 @@
+link-against-system-libyaml.patch
+use-etc-ssl-certs.patch
+link-against-wslay.patch
+tests-force-TLSv1.2-on-s_client-invocations.patch
+link-libh2o-with-wslay.patch
+fix_CVE-2019_1.patch
+mruby_fileutils_no_verbose.patch
+picohttpparser-vcstags.patch
+CVE-2023-44487.patch

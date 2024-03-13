@@ -1,0 +1,19 @@
+#!/bin/sh
+
+set -e
+
+adduser --system --group --disabled-password --disabled-login \
+	--no-create-home --home /nonexistent --quiet debian-h2o
+
+if ! dpkg-statoverride --list /var/log/h2o >/dev/null; then
+	dpkg-statoverride --add root adm 2750 /var/log/h2o 
+fi
+
+#DEBHELPER#
+
+# Gracefully reload any running instances of h2o
+if [ -n "$2" ]; then
+	invoke-rc.d h2o reload || true
+fi
+
+exit 0

@@ -1,0 +1,8 @@
+Document: h2o
+Title: H2O manual
+Abstract: This manual addresses H2O's configuration
+Section: System/Administration
+
+Format: HTML
+Index: /usr/share/doc/h2o/index.html
+Files: /usr/share/doc/h2o/*.html /usr/share/doc/h2o/configure/*.html

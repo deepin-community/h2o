@@ -1,0 +1,25 @@
+Remove expanded $Id$ strings, which seem to break building
+using h2o_2.2.5+dfsg2.orig.tar.xz from the archive.
+
+--- h2o-2.2.5+dfsg2.orig/deps/picohttpparser/picohttpparser.c
++++ h2o-2.2.5+dfsg2/deps/picohttpparser/picohttpparser.c
+@@ -36,7 +36,7 @@
+ #endif
+ #include "picohttpparser.h"
+ 
+-/* $Id: a707070d11d499609f99d09f97535642cec910a8 $ */
++/* $Id$ */
+ 
+ #if __GNUC__ >= 3
+ #define likely(x) __builtin_expect(!!(x), 1)
+--- h2o-2.2.5+dfsg2.orig/deps/picohttpparser/picohttpparser.h
++++ h2o-2.2.5+dfsg2/deps/picohttpparser/picohttpparser.h
+@@ -33,7 +33,7 @@
+ #define ssize_t intptr_t
+ #endif
+ 
+-/* $Id: 67fd3ee74103ada60258d8a16e868f483abcca87 $ */
++/* $Id$ */
+ 
+ #ifdef __cplusplus
+ extern "C" {
