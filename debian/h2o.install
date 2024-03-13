@@ -1,0 +1,4 @@
+usr/bin
+usr/share/h2o
+debian/h2o.conf etc/h2o
+debian/compress_logs usr/share/h2o

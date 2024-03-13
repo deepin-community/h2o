@@ -1,0 +1,28 @@
+#!/bin/sh
+# (C) 2018
+# Author: Anton Gladky <gladk@debian.org>
+# Test the simple webserver
+
+set -e
+
+WORKDIR=$(mktemp -d)
+echo $WORKDIR
+trap "rm -rf $WORKDIR" 0 INT QUIT ABRT PIPE TERM
+
+# Copy examples
+cp -r examples $WORKDIR
+cd $WORKDIR
+
+# Compile
+gcc examples/libh2o/simple.c -lh2o -luv -lssl -lcrypto -lwslay -o simple
+echo "build: OK"
+
+# Run server for 1 sec
+[ -x ./simple ]
+timeout 5 ./simple &
+
+sleep 2
+
+# Test the server
+curl -vs http://127.0.0.1:7890
+echo "run: OK"

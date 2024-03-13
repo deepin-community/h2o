@@ -1,4 +1,29 @@
 #!/usr/bin/make -f
 
+# Enable all hardening flags
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+export PERL5LIB=$(CURDIR)
+
+# Disable the following tests as they require network access
+BAD_TESTS=10http1client 50access-log 50reverse-proxy-added-headers 50reverse-proxy-drop-headers 50reverse-proxy-https 50reverse-proxy-session-resumption 80invalid-h2-chars-in-headers 40server-push 50mruby-acl 80issues595 40max-connections 40session-ticket
+# Disable test which fails with newer mruby
+BAD_TESTS += 50mruby-htpasswd 50mruby-http-request
+
 %:
 	dh $@
+
+override_dh_auto_configure:
+	dh_auto_configure -- -DCMAKE_INSTALL_SYSCONFDIR=/etc/h2o -DWITH_BUNDLED_SSL=off -DWITH_MRUBY=on -DBUILD_SHARED_LIBS=on
+
+override_dh_auto_test:
+	for test in $(BAD_TESTS); do mv $(CURDIR)/t/$$test.t $(CURDIR)/t/$$test.disabled; done
+	dh_auto_test
+	for test in $(BAD_TESTS); do mv $(CURDIR)/t/$$test.disabled $(CURDIR)/t/$$test.t; done
+
+override_dh_installinit:
+	# Do not do a full restart, just a graceful reload
+	dh_installinit --no-restart-after-upgrade --no-stop-on-upgrade
+
+override_dh_installdocs:
+	dh_installdocs
+	find $(CURDIR)/debian/h2o-doc/usr/share/ -type f -print0 | xargs --no-run-if-empty -0 sed -i 's/jquery-1\.9\.1/jquery/g'

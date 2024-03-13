@@ -1,0 +1,5 @@
+# This is the search index generated from the documentation
+h2o source: source-is-missing [doc/search/searchindex.js]
+
+# The bundled YAML copy is not used for building the Debian package
+h2o source: outdated-autotools-helper-file deps/yaml/config/config.*

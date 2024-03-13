@@ -1,0 +1,25 @@
+#!/bin/sh
+# (C) 2018
+# Author: Anton Gladky <gladk@debian.org>
+# Test the simple webserver
+
+set -e
+
+WORKDIR=$(mktemp -d)
+echo $WORKDIR
+trap "rm -rf $WORKDIR" 0 INT QUIT ABRT PIPE TERM
+
+# Copy examples
+cp -r examples $WORKDIR
+cd $WORKDIR
+
+# Compile
+gcc -Wno-deprecated-declarations -Wno-incompatible-pointer-types examples/libh2o/http1client.c -lh2o -luv -lssl -lcrypto -lwslay -o http1client
+echo "build: OK"
+
+# Test the client
+[ -x ./http1client ]
+./http1client http://localhost/server-status/json?show=main
+
+# Test the server
+echo "run: OK"
